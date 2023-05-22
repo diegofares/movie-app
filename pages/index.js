@@ -15,17 +15,20 @@ export default function Home() {
   const [searchValue, setSearchValue] = useState("");
 
 
-  const getMovieRequest = async () => {
-    const url = 'https://www.omdbapi.com/?s=godfather&apikey=515d6411';
+  const getMovieRequest = async (searchValue) => {
+
+    const url = `https://www.omdbapi.com/?s='${searchValue}'&apikey=515d6411`;
     const response = await fetch(url);
     const responseJson = await response.json();
-    setMovies(responseJson.Search);
-    console.log(responseJson);
+    if (responseJson.Search) {
+      setMovies(responseJson.Search);
+    }
+
   }
 
   useEffect(() => {
-    getMovieRequest();
-  }, []);
+    getMovieRequest(searchValue);
+  }, [searchValue]);
   //  getMovieRequest()
   return (
     <>
