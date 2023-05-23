@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react'
 import MovieList from '@/components/movieList'
 import MovieListHeading from '@/components/movieListHeading'
 import SearchBox from '@/components/searchBox'
+import Axios from 'axios'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -18,11 +20,19 @@ export default function Home() {
   const getMovieRequest = async (searchValue) => {
 
     const url = `https://www.omdbapi.com/?s='${searchValue}'&apikey=515d6411`;
-    const response = await fetch(url);
-    const responseJson = await response.json();
-    if (responseJson.Search) {
-      setMovies(responseJson.Search);
-    }
+    // const response = await fetch(url);
+    // const responseJson = await response.json();
+    // if (responseJson.Search) {
+    //   setMovies(responseJson.Search);
+    // }
+
+    Axios.get(url).then((responseJson) => {
+      if (responseJson.data.Search) {
+        setMovies(responseJson.data.Search);
+      }
+    })
+
+
 
   }
 
